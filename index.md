@@ -1,10 +1,15 @@
 ---
 layout: default
-title: 测试
+title: 首页
 ---
 
-文章数量: {{ site.posts | size }}
-
 {% for post in site.posts %}
-  - {{ post.title }}
+<div class="post-preview">
+  <h2><a href=" ">{{ post.title }}</a ></h2>
+  <p class="post-meta">{{ post.date | date: "%Y年%m月%d日" }}</p >
+  <div class="post-content">
+    {{ post.content }}   <!-- 加上这行，显示全文 -->
+  </div>
+  <hr>
+</div>
 {% endfor %}

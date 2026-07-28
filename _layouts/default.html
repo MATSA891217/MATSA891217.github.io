@@ -92,6 +92,64 @@
         transform: scale(1.05);
       }
     }
+
+    /* ===== 文章标题 - 粉色立体底板 ===== */
+    .post-preview h2 {
+      background: #FFBAD4;
+      padding: 12px 20px;
+      border-radius: 16px;
+      display: inline-block;
+      box-shadow: 
+        0 4px 0 #cc8fa8,
+        0 8px 20px rgba(255, 186, 212, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .post-preview h2:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 6px 0 #cc8fa8,
+        0 12px 30px rgba(255, 186, 212, 0.5);
+    }
+
+    .post-preview h2 a {
+      color: #FFABD4 !important;
+      text-decoration: none;
+      font-size: 24px;
+      display: block;
+    }
+
+    /* ===== 正文随机颜色 ===== */
+    .post-content p {
+      animation: randomColor 0.5s infinite alternate;
+    }
+
+    @keyframes randomColor {
+      0% { color: #E22400; }
+      25% { color: #0056D6; }
+      50% { color: #F5EC00; }
+      75% { color: #000000; }
+      100% { color: #E22400; }
+    }
+
+    /* ===== 磨砂玻璃底板 ===== */
+    .post-card {
+      background: rgba(147, 227, 253, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 20px 25px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(147, 227, 253, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .post-card:hover {
+      background: rgba(147, 227, 253, 0.35);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+    }
   </style>
 </head>
 <body>

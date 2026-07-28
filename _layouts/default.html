@@ -93,43 +93,40 @@
       }
     }
 
-    /* ===== 文章标题 - 粉色立体底板 ===== */
-    .post-preview h2 {
-      background: #FFBAD4;
-      padding: 12px 20px;
-      border-radius: 16px;
-      display: inline-block;
-      box-shadow: 
-        0 4px 0 #cc8fa8,
-        0 8px 20px rgba(255, 186, 212, 0.3);
-      transition: all 0.3s ease;
+    /* ===== 日期颜色 ===== */
+    .post-meta {
+      color: #0C5ECE !important;
+      font-size: 14px;
+      margin: 6px 0 12px 0;
     }
 
-    .post-preview h2:hover {
-      transform: translateY(-2px);
+    /* ===== 文章标题 - 古早iPhone按键 ===== */
+    .post-preview h2 {
+      background: #FFBAD4;
+      padding: 10px 20px;
+      border-radius: 12px;
+      display: inline-block;
       box-shadow: 
-        0 6px 0 #cc8fa8,
-        0 12px 30px rgba(255, 186, 212, 0.5);
+        inset 0 -4px 0 #d69ab0,
+        inset 0 0 0 1px #f0a8c0,
+        0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: all 0.15s ease;
+      border: none;
+    }
+
+    .post-preview h2:active {
+      transform: scale(0.96);
+      box-shadow: 
+        inset 0 -2px 0 #d69ab0,
+        inset 0 0 0 1px #f0a8c0,
+        0 1px 4px rgba(0, 0, 0, 0.1);
     }
 
     .post-preview h2 a {
-      color: #FFABD4 !important;
+      color: #B32D8B !important;
       text-decoration: none;
-      font-size: 24px;
+      font-size: 22px;
       display: block;
-    }
-
-    /* ===== 正文随机颜色 ===== */
-    .post-content p {
-      animation: randomColor 0.5s infinite alternate;
-    }
-
-    @keyframes randomColor {
-      0% { color: #E22400; }
-      25% { color: #0056D6; }
-      50% { color: #F5EC00; }
-      75% { color: #000000; }
-      100% { color: #E22400; }
     }
 
     /* ===== 磨砂玻璃底板 ===== */
@@ -156,7 +153,7 @@
   <div class="container">
     <div class="main-content">
       <div class="header-row">
-        <img src="/assets/images/square.png" class="avatar" alt="avatar">
+        < img src="/assets/images/square.png" class="avatar" alt="avatar">
         <div>
           <h1 class="site-title">{{ site.title | default: "MATSA891217" }}</h1>
           <div class="slogan">✨ HELLO MY BLOG ✨</div>
@@ -165,5 +162,32 @@
       {{ content }}
     </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var contents = document.querySelectorAll('.post-content');
+      contents.forEach(function(container) {
+        var walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+        var nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        
+        nodes.forEach(function(node) {
+          var words = node.textContent.split(/(\s+)/);
+          var fragment = document.createDocumentFragment();
+          words.forEach(function(word) {
+            var span = document.createElement('span');
+            span.textContent = word;
+            if (word.trim().length > 0) {
+              var colors = ['#E22400', '#0056D6', '#F5EC00', '#000000'];
+              var randomColor = colors[Math.floor(Math.random() * colors.length)];
+              span.style.color = randomColor;
+            }
+            fragment.appendChild(span);
+          });
+          node.parentNode.replaceChild(fragment, node);
+        });
+      });
+    });
+  </script>
 </body>
 </html>

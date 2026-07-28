@@ -6,3 +6,5 @@ plugins:
 sass:
   style: compressed
 avatar: /assets/images/square.png
+include:
+  - _posts

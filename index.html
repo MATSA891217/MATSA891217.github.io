@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>★ Matsa's Secret Diary ★</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:0;font-family:"Courier New","Microsoft YaHei",monospace;color:#444;background-color:#f8fbff;background-image:linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.18)),url("wallpaper.jpeg");background-size:cover;background-position:center;background-attachment:fixed;min-height:100vh}
+.top-bar{width:100%;height:34px;background:repeating-linear-gradient(45deg,#ff9fcf 0,#ff9fcf 8px,#ffc7e3 8px,#ffc7e3 16px);border-bottom:3px solid white;color:white;text-align:center;line-height:31px;font-size:13px;font-weight:bold;text-shadow:1px 1px 0 #d36b9e;letter-spacing:2px}
+.wrapper{width:1100px;max-width:calc(100% - 30px);margin:25px auto 60px;background:rgba(255,255,255,.82);border:4px solid white;outline:2px dashed #8edcf5;box-shadow:0 0 0 5px rgba(255,255,255,.55),0 8px 35px rgba(75,120,170,.25);border-radius:8px;overflow:hidden}
+.header{position:relative;padding:28px 25px 25px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(239,250,255,.88));border-bottom:3px dotted #8edcf5}
+.header h1{margin:0;font-size:36px;color:#ff72b5;text-shadow:2px 2px 0 white,3px 3px 0 #8edcf5;letter-spacing:3px}
+.header p{margin:10px 0 0;color:#55b9dc;font-size:13px;letter-spacing:2px}
+.sparkle{position:absolute;color:white;font-size:20px;animation:sparkle 1.4s infinite alternate}
+.s1{left:8%;top:20px}.s2{right:10%;top:30px;animation-delay:.4s}.s3{left:18%;bottom:15px;animation-delay:.8s}.s4{right:20%;bottom:10px;animation-delay:.2s}
+@keyframes sparkle{from{opacity:.3;transform:scale(.7) rotate(0deg)}to{opacity:1;transform:scale(1.3) rotate(20deg)}}
+.content{display:grid;grid-template-columns:250px 1fr;gap:20px;padding:20px}
+.sidebar{background:rgba(255,255,255,.9);border:2px solid #9ddff5;padding:15px;box-shadow:4px 4px 0 #ffd2e7;height:fit-content;position:sticky;top:15px}
+.avatar-box{text-align:center;padding-bottom:12px;border-bottom:2px dotted #ffadd3}
+.avatar{width:145px;height:145px;object-fit:cover;border-radius:50%;border:5px solid white;outline:3px solid #ff9dca;box-shadow:4px 4px 0 #9ddff5;background:white}
+.username{color:#ff6dad;font-size:20px;font-weight:bold;margin-top:15px}
+.status{margin:10px 0;padding:7px;background:#e9faff;border:1px dashed #7ed4ef;font-size:12px;color:#4daac9}
+.profile{font-size:12px;line-height:1.8;margin-top:15px}
+.menu{margin-top:20px}.menu-title{color:#ff75b4;font-weight:bold;border-bottom:2px dotted #ffafd3;padding-bottom:5px}
+.menu button{width:100%;margin-top:7px;padding:8px;border:1px solid #8edcf5;background:#f3fcff;color:#4daac9;cursor:pointer;font-family:inherit;font-size:12px}
+.menu button:hover{background:#ffe7f2;color:#ff5da7}
+.main{min-width:0}
+.welcome{padding:15px;margin-bottom:15px;background:rgba(255,245,251,.95);border:2px dashed #ff9fc9;box-shadow:3px 3px 0 #9de4fa}
+.welcome h2{margin:0 0 10px;color:#ff6eaf;font-size:20px}.welcome p{margin:0;line-height:1.8;font-size:13px}
+.editor{background:rgba(255,255,255,.94);border:2px solid #9ddff5;padding:18px;margin-bottom:20px;box-shadow:4px 4px 0 #ffd2e7}
+.editor-title{color:#ff6dad;font-size:18px;font-weight:bold;margin-bottom:15px}
+label{display:block;margin-top:10px;margin-bottom:5px;font-size:12px;color:#5cb5d5;font-weight:bold}
+input,textarea,select{width:100%;padding:10px;border:2px solid #b5e8f7;background:#fcfeff;font-family:inherit;color:#555;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#ff9fc9;box-shadow:0 0 5px rgba(255,150,200,.35)}
+textarea{min-height:180px;resize:vertical;line-height:1.8}
+.image-preview{display:none;margin-top:10px;position:relative}.image-preview img{max-width:200px;max-height:200px;border:3px solid white;outline:2px solid #ffafd3}
+.button-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{padding:9px 15px;border:2px solid white;outline:1px solid #8edcf5;background:#dff7ff;color:#3d9bbd;cursor:pointer;font-family:inherit;font-weight:bold}
+.btn:hover{background:#ffddec;color:#ed5597}.btn-pink{background:#ffb6d7;color:white;outline-color:#ff86b9}.btn-pink:hover{background:#ff8fc1;color:white}
+.btn-green{background:#dff8e9;color:#4caa75;outline-color:#8ed9aa}.btn-orange{background:#fff0d8;color:#d89543;outline-color:#f2c17d}
+.search-box{margin-bottom:15px;display:flex;gap:8px}.search-box input{flex:1}
+.diary-card{background:rgba(255,255,255,.95);border:2px solid #b9eafa;margin-bottom:15px;padding:16px;box-shadow:4px 4px 0 rgba(255,185,216,.55);position:relative}
+.diary-card::before{content:"✦";position:absolute;right:10px;top:8px;color:#ffabd0}
+.diary-date{color:#54b5d7;font-size:11px;margin-bottom:8px}.diary-title{font-size:19px;color:#ff6baa;font-weight:bold;margin-bottom:7px}
+.diary-mood{display:inline-block;padding:3px 7px;background:#e9faff;border:1px solid #a9e4f5;color:#48a9ca;font-size:11px;margin-bottom:10px}
+.diary-content{white-space:pre-wrap;word-break:break-word;line-height:1.9;font-size:13px;color:#555}
+.diary-image{max-width:100%;max-height:400px;display:block;margin-top:15px;border:3px solid white;outline:2px solid #b5e8f7}
+.card-buttons{margin-top:12px;padding-top:10px;border-top:1px dotted #b7e4f3}
+.small-btn{padding:5px 10px;margin-right:5px;border:1px solid #a7dff0;background:white;color:#4daac9;cursor:pointer;font-family:inherit;font-size:11px}
+.small-btn:hover{background:#ffe4f1;color:#ed5798}
+.empty{text-align:center;padding:45px 20px;color:#8bc7db;border:2px dashed #b8e6f5;background:rgba(255,255,255,.8)}
+.footer{text-align:center;padding:20px;background:rgba(235,250,255,.9);border-top:3px dotted #8edcf5;color:#64b5d1;font-size:11px;line-height:2}
+@media(max-width:750px){.content{grid-template-columns:1fr}.sidebar{position:static}.wrapper{max-width:calc(100% - 15px);margin-top:15px}.header h1{font-size:25px}}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:#eafaff}::-webkit-scrollbar-thumb{background:#9edff3;border:2px solid white}
+</style>
+</head>
+<body>
+<div class="top-bar">★ WELCOME TO MY SECRET INTERNET DIARY ★</div>
+<div class="wrapper">
+<header class="header">
+<span class="sparkle s1">✦</span><span class="sparkle s2">✧</span><span class="sparkle s3">★</span><span class="sparkle s4">✦</span>
+<h1>★ MATSA'S SECRET DIARY ★</h1>
+<p>welcome to my little corner of the internet ♡</p>
+</header>
+<div class="content">
+<aside class="sidebar">
+<div class="avatar-box">
+<img src="avatar.png" class="avatar" alt="我的头像">
+<div class="username">Matsa</div>
+<div class="status">● ONLINE<br>currently writing...</div>
+</div>
+<div class="profile">
+<b>♡ ABOUT ME</b><br><br>
+Welcome to my secret diary!<br>
+This is my tiny place on the internet.<br><br>
+I like drawing, music, design, strange things and making memories.<br><br>
+Feel free to read my thoughts ♡
+</div>
+<div class="menu">
+<div class="menu-title">✧ MENU</div>
+<button onclick="scrollToEditor()">✎ WRITE A DIARY</button>
+<button onclick="scrollToDiaries()">♡ MY DIARIES</button>
+<button onclick="showAllDiaries()">★ SHOW ALL</button>
+<button onclick="clearSearch()">✦ CLEAR SEARCH</button>
+</div>
+</aside>
+<main class="main">
+<section class="welcome">
+<h2>♡ Welcome to my diary ♡</h2>
+<p>Hey! You found my secret diary!<br>
+Here I can write down my thoughts, little stories, random ideas, dreams and memories.<br>
+Everything you write here will be saved automatically in this browser. ✧</p>
+</section>
+<section class="editor" id="editor">
+<div class="editor-title">✎ WRITE A NEW DIARY</div>
+<input type="hidden" id="editId">
+<label>DIARY TITLE / 日记标题</label>
+<input type="text" id="title" placeholder="例如：今天发生了一件很有趣的事情...">
+<label>MOOD / TODAY'S FEELING</label>
+<select id="mood">
+<option value="😊 HAPPY">😊 HAPPY / 开心</option>
+<option value="😎 COOL">😎 COOL / 酷</option>
+<option value="🥰 LOVE">🥰 LOVE / 幸福</option>
+<option value="😴 SLEEPY">😴 SLEEPY / 困</option>
+<option value="😭 SAD">😭 SAD / 难过</option>
+<option value="😡 ANGRY">😡 ANGRY / 生气</option>
+<option value="🤔 THINKING">🤔 THINKING / 思考</option>
+<option value="😐 NORMAL">😐 NORMAL / 平静</option>
+<option value="✨ MAGICAL">✨ MAGICAL / 奇妙</option>
+</select>
+<label>DATE / 日期</label>
+<input type="date" id="date">
+<label>YOUR DIARY / 日记内容</label>
+<textarea id="contentText" placeholder="Dear Diary...
+
+今天发生了什么？
+
+我现在的心情是什么？
+
+有什么想记录下来的事情？
+
+写在这里吧 ♡"></textarea>
+<label>PHOTO / 添加照片（可选）</label>
+<input type="file" id="imageInput" accept="image/*">
+<div class="image-preview" id="imagePreview">
+<img id="previewImage" alt="图片预览">
+</div>
+<div class="button-row">
+<button class="btn btn-pink" onclick="saveDiary()">💾 SAVE DIARY</button>
+<button class="btn" onclick="clearEditor()">↻ CLEAR</button>
+<button class="btn" onclick="cancelEdit()" id="cancelBtn" style="display:none;">← CANCEL EDIT</button>
+</div>
+</section>
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="🔍 Search my diaries..." oninput="searchDiaries()">
+<button class="btn" onclick="clearSearch()">CLEAR</button>
+</div>
+<div class="button-row">
+<button class="btn btn-green" onclick="exportDiary()">📤 EXPORT BACKUP</button>
+<button class="btn btn-orange" onclick="document.getElementById('importFile').click()">📥 IMPORT BACKUP</button>
+<input type="file" id="importFile" accept=".json,application/json" style="display:none;" onchange="importDiary(event)">
+</div>
+<br>
+<section id="diaryList"></section>
+</main>
+</div>
+<footer class="footer">
+★ THANK YOU FOR VISITING MY SECRET DIARY ★<br>
+Made with ♡ by Matsa<br>
+<span id="diaryCount"></span>
+</footer>
+</div>
+
+<script>
+let diaries=JSON.parse(localStorage.getItem("matsaDiary"))||[];
+let currentImage="";
+
+window.onload=function(){setToday();renderDiaries();};
+
+function setToday(){
+const today=new Date();
+const yyyy=today.getFullYear();
+const mm=String(today.getMonth()+1).padStart(2,"0");
+const dd=String(today.getDate()).padStart(2,"0");
+document.getElementById("date").value=yyyy+"-"+mm+"-"+dd;
+}
+
+document.getElementById("imageInput").addEventListener("change",function(event){
+const file=event.target.files[0];
+if(!file)return;
+const reader=new FileReader();
+reader.onload=function(e){
+currentImage=e.target.result;
+document.getElementById("previewImage").src=currentImage;
+document.getElementById("imagePreview").style.display="block";
+};
+reader.readAsDataURL(file);
+});
+
+function saveDiary(){
+const title=document.getElementById("title").value.trim();
+const mood=document.getElementById("mood").value;
+const date=document.getElementById("date").value;
+const content=document.getElementById("contentText").value.trim();
+const editId=document.getElementById("editId").value;
+
+if(!title){alert("请给你的日记写一个标题 ♡");return;}
+if(!content){alert("日记内容还是空的哦 ✧");return;}
+
+if(editId){
+const index=diaries.findIndex(diary=>diary.id==editId);
+if(index!==-1){
+diaries[index].title=title;
+diaries[index].mood=mood;
+diaries[index].date=date;
+diaries[index].content=content;
+if(currentImage)diaries[index].image=currentImage;
+}
+alert("日记修改成功！♡");
+}else{
+const newDiary={
+id:Date.now(),
+title:title,
+mood:mood,
+date:date,
+content:content,
+image:currentImage,
+createdAt:new Date().toISOString()
+};
+diaries.unshift(newDiary);
+alert("日记保存成功！✦");
+}
+saveToLocalStorage();
+clearEditor();
+renderDiaries();
+}
+
+function saveToLocalStorage(){
+localStorage.setItem("matsaDiary",JSON.stringify(diaries));
+}
+
+function renderDiaries(list=diaries){
+const diaryList=document.getElementById("diaryList");
+diaryList.innerHTML="";
+document.getElementById("diaryCount").innerText="TOTAL DIARIES: "+diaries.length;
+
+if(list.length===0){
+diaryList.innerHTML=`<div class="empty">♡ There is nothing here yet ♡<br><br>Why don't you write your first diary? ✧</div>`;
+return;
+}
+
+list.forEach(diary=>{
+const card=document.createElement("article");
+card.className="diary-card";
+let imageHTML="";
+if(diary.image){
+imageHTML=`<img src="${diary.image}" class="diary-image" alt="Diary Image">`;
+}
+card.innerHTML=`
+<div class="diary-date">📅 ${escapeHTML(diary.date)}</div>
+<div class="diary-title">${escapeHTML(diary.title)}</div>
+<div class="diary-mood">${escapeHTML(diary.mood)}</div>
+<div class="diary-content">${escapeHTML(diary.content)}</div>
+${imageHTML}
+<div class="card-buttons">
+<button class="small-btn" onclick="editDiary(${diary.id})">✎ EDIT</button>
+<button class="small-btn" onclick="deleteDiary(${diary.id})">✕ DELETE</button>
+</div>`;
+diaryList.appendChild(card);
+});
+}
+
+function editDiary(id){
+const diary=diaries.find(item=>item.id===id);
+if(!diary)return;
+document.getElementById("editId").value=diary.id;
+document.getElementById("title").value=diary.title;
+document.getElementById("mood").value=diary.mood;
+document.getElementById("date").value=diary.date;
+document.getElementById("contentText").value=diary.content;
+currentImage=diary.image||"";
+if(currentImage){
+document.getElementById("previewImage").src=currentImage;
+document.getElementById("imagePreview").style.display="block";
+}
+document.getElementById("cancelBtn").style.display="inline-block";
+document.querySelector(".editor-title").innerText="✎ EDIT MY DIARY";
+scrollToEditor();
+}
+
+function deleteDiary(id){
+const diary=diaries.find(item=>item.id===id);
+if(!diary)return;
+const confirmDelete=confirm("确定要删除这篇日记吗？\n\n删除之后无法恢复哦。");
+if(!confirmDelete)return;
+diaries=diaries.filter(item=>item.id!==id);
+saveToLocalStorage();
+renderDiaries();
+}
+
+function searchDiaries(){
+const keyword=document.getElementById("searchInput").value.toLowerCase().trim();
+if(!keyword){renderDiaries();return;}
+const result=diaries.filter(diary=>
+diary.title.toLowerCase().includes(keyword)||
+diary.content.toLowerCase().includes(keyword)||
+diary.mood.toLowerCase().includes(keyword)||
+diary.date.includes(keyword)
+);
+renderDiaries(result);
+}
+
+function clearSearch(){
+document.getElementById("searchInput").value="";
+renderDiaries();
+}
+
+function clearEditor(){
+document.getElementById("editId").value="";
+document.getElementById("title").value="";
+document.getElementById("contentText").value="";
+document.getElementById("imageInput").value="";
+currentImage="";
+document.getElementById("imagePreview").style.display="none";
+document.getElementById("cancelBtn").style.display="none";
+document.querySelector(".editor-title").innerText="✎ WRITE A NEW DIARY";
+setToday();
+}
+
+function cancelEdit(){clearEditor();}
+
+function scrollToEditor(){
+document.getElementById("editor").scrollIntoView({behavior:"smooth"});
+}
+
+function scrollToDiaries(){
+document.getElementById("diaryList").scrollIntoView({behavior:"smooth"});
+}
+
+function showAllDiaries(){
+clearSearch();
+scrollToDiaries();
+}
+
+function exportDiary(){
+if(diaries.length===0){
+alert("目前没有可以备份的日记哦 ♡");
+return;
+}
+const backupData={
+app:"Matsa's Secret Diary",
+version:"2.0",
+exportDate:new Date().toISOString(),
+diaries:diaries
+};
+const json=JSON.stringify(backupData,null,4);
+const blob=new Blob([json],{type:"application/json"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+const date=new Date().toISOString().slice(0,10);
+a.href=url;
+a.download="matsa-diary-backup-"+date+".json";
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
+alert("日记备份成功！♡\n\n请妥善保存下载的 JSON 文件。");
+}
+
+function importDiary(event){
+const file=event.target.files[0];
+if(!file)return;
+const reader=new FileReader();
+reader.onload=function(e){
+try{
+const data=JSON.parse(e.target.result);
+let importedDiaries;
+if(data.diaries&&Array.isArray(data.diaries)){
+importedDiaries=data.diaries;
+}else if(Array.isArray(data)){
+importedDiaries=data;
+}else{
+throw new Error("格式错误");
+}
+const confirmImport=confirm(
+"发现 "+importedDiaries.length+" 篇日记。\n\n"+
+"点击确定后，将用备份覆盖当前日记。\n\n"+
+"建议先导出当前日记作为备份。\n\n"+
+"确定要继续吗？"
+);
+if(!confirmImport){
+event.target.value="";
+return;
+}
+diaries=importedDiaries;
+saveToLocalStorage();
+renderDiaries();
+clearEditor();
+alert("日记恢复成功！♡\n\n共恢复 "+diaries.length+" 篇日记。");
+}catch(error){
+alert("导入失败！\n\n请选择由本日记本导出的 JSON 备份文件。");
+}
+event.target.value="";
+};
+reader.readAsText(file);
+}
+
+function escapeHTML(text){
+const div=document.createElement("div");
+div.textContent=text;
+return div.innerHTML;
+}
+</script>
+</body>
+</html>
